@@ -1,0 +1,39 @@
+<h1>Hello World</h1>
+<body>
+    <table border="1">
+        5月
+        <% for(let day= 1;day <= 30;day++) {%>
+            <tr>
+                <td>
+                    <%=day%>
+                </td>
+            <% for(let i in content) { %>
+                    <% 
+                        let obj = content[i];
+                        let target = '2020-05-'+ day;
+                        if(obj.date === target){
+                    %>
+                    <td>
+                        <% //obj.date %>
+                    </td>
+                    <td>
+                        <%= obj.plan %>
+                    </td>
+                    <td>
+                        <a href="/edit/<%= obj.id %>">更新</a>
+                    </td>
+                    <td>
+                        <a href="/delete/<%= obj.id %>">削除</a>
+                    </td>
+                    <% } else { %>
+                        <% let setday = "2020-05-" + day;%>
+                    <td>
+                        <a href="/create/<%=setday%>">新規作成</a>
+                    </td>
+                    <% break; } %>
+            </tr>
+            <% } %>
+        <% }%>
+    </table>
+
+</body>
