@@ -1,39 +1,97 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stykesheet" href="..\css\sample.css">
+
+
+    <!-- Make day 1 to 31 -->
+    <% let setday = []; %>
+    <% for (let y = 1; y <= 31; y++){ %>
+    <% if (y <= 9) { %>
+    <% setday[y] = ("2020-05-0"+y); %>
+    <% } else{ %>
+    <% setday[y] = ("2020-05-"+y); %>
+    <% } %>
+    <% } %>
+
+    <!-- "日付と月を引数で送ればよい" -->
+    <% function planon(i){ %>
+        <% let re = "";%>
+        <% let targetday = new Date(2020,4,i);%>
+        <% targetday.setDate(i+1);%>
+        <% targetday = targetday.toISOString().split("T")[0];%>
+         <% for(var j of content) { %>
+            <% let stday1 = targetday.toString(); %>
+            <%console.log(stday1,"||||",j.date);%>
+            <% if (stday1 == j.date ){ %>
+                <% re = '/edit/'+j.id; %>
+            <% } else { %>
+                <% re = '/create/'+setday[i]; %>
+            <% } %>
+        <% } %>
+        <% return re ; %>
+    <% } %>
+
+
 <body>
+    <h1>中間報告書 Calender</h1>
     <table border="1">
         5月
-        <% for(let day= 1;day <= 30;day++) {%>
-            <tr>
-                <td>
-                    <%=day%>
-                </td>
-            <% for(let i in content) { %>
-                    <% 
-                        let obj = content[i];
-                        let target = '2020-05-'+ day;
-                        if(obj.date === target){
-                    %>
-                    <td>
-                        <% //obj.date %>
-                    </td>
-                    <td>
-                        <%= obj.plan %>
-                    </td>
-                    <td>
-                        <a href="/edit/<%= obj.id %>">更新</a>
-                    </td>
-                    <td>
-                        <a href="/delete/<%= obj.id %>">削除</a>
-                    </td>
-                    <% } else { %>
-                        <% let setday = "2020-05-" + day;%>
-                    <td>
-                        <a href="/create/<%=setday%>">新規作成</a>
-                    </td>
-                    <% break; } %>
-            </tr>
+
+        <% let array = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; %>
+        <tr>
+            <% for(let i = 0; i <= 6; i++){ %>
+            <td>
+                <%= array[i]; %>
+            </td>
             <% } %>
-        <% }%>
+        </tr>
+        <tr>
+            <% for(let i = 1; i <= 7; i++) { %>
+            <% if(i<=5) { %>
+            <th>&nbsp;</th>
+            <% } else { %>
+            <contents class="date"></contents>
+            <th><a href="<%=planon(i-5) %>"><p><%= i-5; %></p><%=content[i-5].plan %></a></th>
+            <!-- <th><a href="/edit/<%=content[i-6].id %>"><p><%=i-5%></p><%=content[i-6].plan %></a></th> -->
+            <% } %>
+            <% } %>
+            </th>
+        </tr>
+        <tr>
+            <% for(let i = 3; i <= 9; i++) { %>
+            <th><a href="<%=planon(i) %>"><%= i; %></a></th>
+            <% } %>
+        </tr>
+        <tr>
+            <% for(let i = 10; i <= 16; i++) {%>
+            <th><a href="/create/<%=setday[i];%>"><%= i; %></a></th>
+            <% } %>
+        </tr>
+        <tr>
+            <% for(let i = 17; i <= 23; i++) { %>
+            <th><a href="/create/<%=setday[i];%>"><%= i; %></a></th>
+            <% } %>
+        </tr>
+        <tr>
+            <% for(let i = 24; i <= 30; i++) { %>
+            <th><a href="/create/<%=setday[i];%>"><%= i; %></a></th>
+            <% } %>
+        </tr>
+        <tr>
+            <% for(let i = 31; i <= 37; i++) { %>
+            <% if(i<=31) { %>
+            <th><a href="/create/<%=setday[i];%>"><%= i; %></a></th>
+            <% } else { %>
+            <th>&nbsp;</th>
+            <% } %>
+            <% } %>
+        </tr>
     </table>
 
 </body>
+</head>
+
+</html>

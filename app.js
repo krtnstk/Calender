@@ -18,7 +18,6 @@ var con = mysql.createConnection({
   timezone: 'jst'
 });
 
-
 app.get('/', (req, res) => {
 	const sql = "select * from schedule";
 	con.query(sql, function (err, result, fields) {  
@@ -66,5 +65,13 @@ app.get('/delete/:id',(req,res)=>{
 		res.redirect('/');
 	})
 });
+
+app.get('/', function(req, res, next) {
+	const query = 'SELECT * FROM schedule';
+	con.query(query, function(err, rows) {
+	  console.log(rows);
+	  res.render('form',{day : req.params.setday});
+	});
+  });
 
 app.listen(3000);
