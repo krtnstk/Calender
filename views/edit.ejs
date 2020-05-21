@@ -8,7 +8,7 @@
     <h1>更新フォーム</h1>
     <form action="/update/<%= schedule[0].id %>" method="POST">
         date <input type="date" name="date" value="<%= schedule[0].date %>"><br>
-        plan <input type="text" name="plan" value="<%= schedule[0].plan %>"><br>
+        plan <input type="text" name="plan" maxlength="20" value="<%= schedule[0].plan %>"><br>
         <button type="submit">更新</button>
     </form>    
 </body>
