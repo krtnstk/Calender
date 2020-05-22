@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>User Edit</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Sans+JP:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="../test.css">
 </head>
 <body>
-    <h1>更新フォーム</h1>
+    <h1>更新フォーム(<%= schedule[0].date %>)</h1>
     <form action="/update/<%= schedule[0].id %>" method="POST">
-        date <input type="date" name="date" value="<%= schedule[0].date %>"><br>
-        plan <input type="text" name="plan" maxlength="20" value="<%= schedule[0].plan %>"><br>
-        <button type="submit">更新</button>
+        <input type="hidden" name="date" value="<%= schedule[0].date %>"><br>
+        <br><br><h3>予定</h3><input type="text" name="plan" maxlength="20" value="<%= schedule[0].plan %>"><br>
+        
+    <button type="submit" class="btn-flat-border" onclick="window.close();"><h3>更新</h3></button>
+    <a href="/delete/<%= schedule[0].id %>" class="btn-flat-border" onclick="window.close();"><h3>削除</h3></a>
     </form>    
 </body>
 </html>

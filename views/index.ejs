@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stykesheet" href="..\css\sample.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Sans+JP:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="sample.css">
 
 
     <%#  May's Make day 1 to 31 %>
@@ -36,7 +37,6 @@
     <% } %>
     <% } %>
 
-
     <!-- "日付と月を引数で送ればよい" -->
     <% function planon(i,m){ %>
         <%# May,June,Julyの仕分け%>
@@ -52,11 +52,9 @@
         <% let targetday = new Date(2020,m,i);%>
         <% targetday.setDate(i+1);%>
         <% targetday = targetday.toISOString().split("T")[0];%>
-        <%console.log(targetday);%>
         <%# dateデータの有無を確認 %>
         <% for(var j of content) { %>
             <% let stday1 = targetday.toString(); %>
-            <%console.log(stday1,"||||",j.date);%>
             <% if (stday1 == j.date ){ %>
                 <% re = '/edit/'+j.id; %>
                 <% break %>
@@ -75,127 +73,146 @@
         <%#  planデータの有無を確認 %>
         <% for(var j of content) { %>
             <% let stday1 = targetday.toString(); %>
-            <%console.log(stday1,"||||",j.date);%>
             <% if (stday1 == j.date ){ %>
                 <% pm = j.plan; %>
+                <% if(pm.length > 5) pm = pm.substr(0,5) + '...'; %>
                 <% return pm; %>
-                <% break %>
+                <% break; %>
             <% } %>
         <% } %>
-        <% return pm ; %>
+        <% return pm; %>
     <% } %>
-
-
+<script type="text/javascript">
+function openwin(link_tab){ 
+   let WIDTH = 800;
+   let HEIGHT = 600;
+   let top = window.innerHeight / 2;
+   let left = window.innerWidth / 2;
+   let x = left - (WIDTH / 2);
+   let y = top - (HEIGHT / 2);
+  window.open(link_tab, "", "width="+WIDTH+",height="+HEIGHT+",left="+x+",top="+y);
+ } 
+</script>
 <body>
-
+    <% let array = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; %>
     <%#  May %>
-
     <% let m = 4 %>
-
-    <h1>中間報告書 Calender</h1>
-    
+    <h1>
+        <img src="fastparrot.gif">
+        中間報告書まであと
+        <%let dead = new Date(); %>
+        <%let tyuukann = new Date(2020,6,31); %>
+        <%let countdown = parseInt((tyuukann - dead)/ 86400000);%>
+        <%=countdown+1%>
+        日
+        <img src="fastparrot.gif">
+    </h1>
     <%# css が読み込まれない ↓↓↓%>
+    <h2>5月</h2>
     <table class = "calender_display">
-        5月
-
-        <% let array = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; %>
         <tr>
             <% for(let i = 0; i <= 6; i++){ %>
-            <td>
-                <%= array[i]; %>
-            </td>
+            <th>
+                <%if(i == 0){ %>
+                    <%-"<h4 style='color: brown;'>"+array[i]+"</h4>"; %>
+                <% } else if(i == 6){ %>
+                    <%-"<h4 style='color:navy;'>"+array[i]+"</h4>"; %>
+                <% } else {%>
+                    <%-"<h4>"+array[i]+"</h4>"; %>
+                <% }%>
+            </th>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 1; i <= 7; i++) { %>
             <% if(i<=5) { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } else { %>
             <%#  <contents class="date"></contents> %>
-            <th><a href="<%= planon(i-5,m); %>"><p><%= i-5; %></p><%=planmake(i-5,m) %></a></th>
+            <td><a href="<%=planon(i-5,m);%>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i-5; %></div><h5><%=planmake(i-5,m);%></h5></a></td>
             <% } %>
             <% } %>
-            </th>
         </tr>
         <tr>
             <% for(let i = 3; i <= 9; i++) { %>
-            <th><a href="<%= planon(i,m) %>"><p><%= i; %></p><%=planmake(i,m) %></a></th>
+            <td><a href="<%= planon(i,m) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 10; i <= 16; i++) {%>
-            <th><a href="<%= planon(i,m) %>"><p><%= i; %></p><%=planmake(i,m) %></a></th>
+            <td><a href="<%= planon(i,m) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 17; i <= 23; i++) { %>
-                <th><a href="<%= planon(i,m) %>"><p><%= i; %></p><%=planmake(i,m) %></a></th>
+                <td><a href="<%= planon(i,m) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 24; i <= 30; i++) { %>
-                <th><a href="<%= planon(i,m) %>"><p><%= i; %></p><%=planmake(i,m) %></a></th>
+                <td><a href="<%= planon(i,m) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 31; i <= 37; i++) { %>
             <% if(i<=31) { %>
-                <th><a href="<%= planon(i,m) %>"><p><%= i; %></p><%=planmake(i,m) %></a></th>
+                <td><a href="<%= planon(i,m) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m) %></h5></a></td>
             <% } else { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } %>
             <% } %>
         </tr>
-
-        <table wigth = "300" height = "100">
     </table>
-
     <br>
 <%# June %>
     <br>
 
-    <table border="1">
-        6月
-
-        <% array = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; %>
+    <table class = "calender_display">
+        <h2>6月</h2>
         <tr>
             <% for(let i = 0; i <= 6; i++){ %>
-            <td>
-                <%= array[i]; %>
-            </td>
+            <th>
+                <%if(i == 0){ %>
+                    <%-"<h4 style='color: brown;'>"+array[i]+"</h4>"; %>
+                <% } else if(i == 6){ %>
+                    <%-"<h4 style='color:navy;'>"+array[i]+"</h4>"; %>
+                <% } else {%>
+                    <%-"<h4>"+array[i]+"</h4>"; %>
+                <% }%>
+            </th>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 1; i <= 7; i++) { %>
             <% if(i==1) { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } else { %>
-            <th><a href="<%= planon(i-1,m+1) %>"><p><%= i-1; %></p><%=planmake(i-1,m+1) %></a></th>
+            <td><a href="<%= planon(i-1,m+1) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i-1; %></div><h5><%=planmake(i-1,m+1) %></h5></a></td>
             <% } %>
             <% } %>
             </th>
         </tr>
         <tr>
             <% for(let i = 7; i <= 13; i++) { %>
-            <th><a href="<%= planon(i,m+1) %>"><p><%= i; %></p><%=planmake(i,m+1) %></a></th>
+            <td><a href="<%= planon(i,m+1) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+1) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 14; i <= 20; i++) {%>
-            <th><a href="<%= planon(i,m+1) %>"><p><%= i; %></p><%=planmake(i,m+1) %></a></th>
+            <td><a href="<%= planon(i,m+1) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+1) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 21; i <= 27; i++) { %>
-            <th><a href="<%= planon(i,m+1) %>"><p><%= i; %></p><%=planmake(i,m+1) %></a></th>
+            <td><a href="<%= planon(i,m+1) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+1) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 28; i <= 34; i++) { %>
             <% if(i<=30) { %>
-            <th><a href="<%= planon(i,m+1) %>"><p><%= i; %></p><%=planmake(i,m+1) %></a></th>    
+            <td><a href="<%= planon(i,m+1) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+1) %></h5></a></td>    
             <% } else { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } %>
             <% } %>
         </tr>
@@ -204,49 +221,51 @@
     <br>
 <%#  July %>
     <br>
-
-    <table border="1">
-        7月
-
-        <% array = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; %>
+    <h2>7月</h2>
+    <table class = "calender_display">
         <tr>
             <% for(let i = 0; i <= 6; i++){ %>
-            <td>
-                <%= array[i]; %>
-            </td>
+            <th>
+                <%if(i == 0){ %>
+                    <%-"<h4 style='color: brown;'>"+array[i]+"</h4>"; %>
+                <% } else if(i == 6){ %>
+                    <%-"<h4 style='color:navy;'>"+array[i]+"</h4>"; %>
+                <% } else {%>
+                    <%-"<h4>"+array[i]+"</h4>"; %>
+                <% }%>
+            </th>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 1; i <= 7; i++) { %>
             <% if(i<=3) { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } else { %>
-            <th><a href="<%= planon(i-3,m+2) %>"><p><%= i-3; %></p><%=planmake(i-3,m+2) %></a></th>
+            <td><a href="<%= planon(i-3,m+2) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i-3; %></div><h5><%=planmake(i-3,m+2) %></h5></a></td>
             <% } %>
             <% } %>
-            </th>
         </tr>
         <tr>
             <% for(let i = 5; i <= 11; i++) { %>
-            <th><a href="<%= planon(i,m+2) %>"><p><%= i; %></p><%=planmake(i,m+2) %></a></th>
+            <td><a href="<%= planon(i,m+2) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+2) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 12; i <= 18; i++) {%>
-                <th><a href="<%= planon(i,m+2) %>"><p><%= i; %></p><%=planmake(i,m+2) %></a></th>
+                <td><a href="<%= planon(i,m+2) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+2) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 19; i <= 25; i++) { %>
-                <th><a href="<%= planon(i,m+2) %>"><p><%= i; %></p><%=planmake(i,m+2) %></a></th>
+                <td><a href="<%= planon(i,m+2) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+2) %></h5></a></td>
             <% } %>
         </tr>
         <tr>
             <% for(let i = 26; i <= 32; i++) { %>
             <% if(i<=31) { %>
-                <th><a href="<%= planon(i,m+2) %>"><p><%= i; %></p><%=planmake(i,m+2) %></a></th>
+                <td><a href="<%= planon(i,m+2) %>" onclick="openwin(this.href);return false;" ><div class="days_span"><%= i; %></div><h5><%=planmake(i,m+2) %></h5></a></td>
             <% } else { %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
             <% } %>
             <% } %>
         </tr>

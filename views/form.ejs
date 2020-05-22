@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>入力フォーム</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Sans+JP:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="../test.css">
+	<title></title>
 </head>
 <body>
-<h1>入力フォーム</h1>
+<h1>入力フォーム(<%=day%>)</h1>
 <form action="/" method="POST">
     
-    date <input type="date" name="date" value="<%=day%>"><br>
-    plan <input type="text" name="plan" maxlength="20"><br>
-
-    <button type="submit">送信</button>
+    <input type="hidden" name="date" value="<%=day%>">
+    <br><br><h3>予定を入れてね</h3><input type="text" maxlength="20" name="plan" maxlength="20"><br>
+    <br>
+    <button type="submit" class="btn-flat-border" onclick="window.close();"><h3>登録</h3></button>
 </form>
 </body>
 </html>
